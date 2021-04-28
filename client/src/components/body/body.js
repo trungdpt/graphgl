@@ -2,21 +2,49 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { Table, Container, Row, Button, Modal, Form, Col } from 'react-bootstrap';
 import { MOCK_DATA } from '../../services/mock-data';
+import { EditModal } from './edit-modal/edit-modal';
+import { CreateModal } from './create-modal/create-modal';
+import { DeleteModal } from './delete-modal/delete-modal';
+
+
 export const Body = () => {
-    const [selectingPerson, setSelectingPerson] = useState(null);
-    const [show, setShow] = useState(false);
+    const [selectedPerson, setSelectedPerson] = useState(null);
+    const [isCreateModalShown, setIsCreateModalShown] = useState(false);
+    const [isEditModalShown, setIsEditModalShown] = useState(false);
+    const [isDeleteModalShown, setIsDeleteModalShown] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleCreateModalClose = () => {
+        setIsCreateModalShown(false);
+    };
 
-    const onClickEditButton = (i) => {
-        setSelectingPerson(i);
-        handleShow();
+    const showCreateModal = () => {
+        setIsCreateModalShown(true);
+    }
+
+    const handleEditModalClose = () => {
+        setSelectedPerson(null);
+        setIsEditModalShown(false);
+    };
+
+    const showEditModal = (item) => {
+        setSelectedPerson(item);
+        setIsEditModalShown(true);
+    }
+
+    const showDeleteModal = (item) => {
+        setSelectedPerson(item);
+        setIsDeleteModalShown(true);
+    }
+
+    const hideDeleteModal = () => {
+        setSelectedPerson(null);
+        setIsDeleteModalShown(false);
     }
 
     return (
         <Container className="mt-4">
-            <Table striped bordered hover>
+            <Button variant="success" onClick={showCreateModal}>Create</Button>
+            <Table striped bordered hover className="m-2">
                 <thead>
                     <tr className="text-center">
                         <th>Name</th>
@@ -33,58 +61,27 @@ export const Body = () => {
                             <td>{i.age}</td>
                             <td>{i.skill}</td>
                             <td>{i.department}</td>
-                            <td><Button onClick={() => {onClickEditButton(i)}}>Edit</Button></td>
+                            <td>
+                                <Row>
+                                    <Col xs={{ span: 6, offset: 3 }}>
+                                        <Row>
+                                            <Col>
+                                                <Button className="me-1 w-100" onClick={() => { showEditModal(i) }}> Edit </Button>
+                                            </Col>
+                                            <Col>
+                                                <Button variant="danger w-100" onClick={() => { showDeleteModal(i) }} block>Delete</Button>
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                            </td>
                         </tr>)
                     }
                 </tbody>
             </Table>
-            <Modal show={show} onHide={handleClose} centered>
-                <Modal.Header closeButton>
-                    <Modal.Title>Person Information</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form.Group as={Row} controlId="formPlaintextPassword">
-                        <Form.Label column sm="3">
-                            Name
-                        </Form.Label>
-                        <Col sm="9">
-                            <Form.Control placeholder="Name" value={selectingPerson && selectingPerson.name} />
-                        </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} controlId="formPlaintextPassword">
-                        <Form.Label column sm="3">
-                            Age
-                        </Form.Label>
-                        <Col sm="9">
-                            <Form.Control placeholder="Age" value={selectingPerson && selectingPerson.age}/>
-                        </Col>
-                    </Form.Group>
-                    <Form.Group as={Row} controlId="formPlaintextPassword">
-                        <Form.Label column sm="3">
-                            Skill
-                        </Form.Label>
-                        <Col sm="9">
-                            <Form.Control placeholder="Skill" value={selectingPerson && selectingPerson.skill}/>
-                        </Col>
-                    </Form.Group>
-                    <Form.Group as={Row}>
-                        <Form.Label column sm="3" value={selectingPerson && selectingPerson.department}>
-                            Department
-                        </Form.Label>
-                        <Col sm="9">
-                            <Form.Control placeholder="Department" />
-                        </Col>
-                    </Form.Group>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                     </Button>
-                     <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+            <CreateModal show={isCreateModalShown} handleClose={handleCreateModalClose} />
+            <EditModal show={isEditModalShown} handleClose={handleEditModalClose} selectedPerson={selectedPerson} />
+            <DeleteModal show={isDeleteModalShown} handleClose={hideDeleteModal} selectedPerson={selectedPerson} />
         </Container>
     );
 }
