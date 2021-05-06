@@ -1,0 +1,18 @@
+
+
+Table Department
+INSERT INTO `graphql`.`department` (`department_id`, `description`) VALUES ('1', 'DC8-Ext');
+INSERT INTO `graphql`.`department` (`department_id`, `description`) VALUES ('2', 'DC3-Ext');
+INSERT INTO `graphql`.`department` (`department_id`, `description`) VALUES ('3', 'DC13-Ext');
+
+Table Position
+INSERT INTO `graphql`.`position` (`position_id`, `description`) VALUES ('1', 'Engineer');
+INSERT INTO `graphql`.`position` (`position_id`, `description`) VALUES ('2', 'Senior Engineer');
+INSERT INTO `graphql`.`position` (`position_id`, `description`) VALUES ('3', 'Project Manager');
+
+Table Employee
+INSERT INTO `graphql`.`employee` (`id`, `address`, `age`, `day_of_birth`, `gender`, `mobile_number`, `name`, `department_id`, `position_id`) VALUES ('1', 'QN', '26', '1995-22-03', 'Male', '032652356', 'Hung', '1', '1');
+INSERT INTO `graphql`.`employee` (`id`, `address`, `age`, `day_of_birth`, `gender`, `mobile_number`, `name`, `department_id`, `position_id`) VALUES ('2', 'QN', '26', '1995-11-04', 'Female', '023695896', 'Phuong', '2', '2');
+INSERT INTO `graphql`.`employee` (`id`, `address`, `age`, `day_of_birth`, `gender`, `mobile_number`, `name`, `department_id`, `position_id`) VALUES ('3', 'QN', '26', '1995-04-01', 'Male', '032569856', 'Nam', '1', '1');
+INSERT INTO `graphql`.`employee` (`id`, `address`, `age`, `day_of_birth`, `gender`, `mobile_number`, `name`, `department_id`, `position_id`) VALUES ('4', 'QN', '26', '1995-12-10', 'Male', '036589569', 'Hai', '2', '1');
+INSERT INTO `graphql`.`employee` (`id`, `address`, `age`, `day_of_birth`, `gender`, `mobile_number`, `name`, `department_id`, `position_id`) VALUES ('5', 'QN', '26', '1995-09-07', 'Female', '036985698', 'Thao', '3', '2');

@@ -1,0 +1,49 @@
+schema {
+    query: Query,
+    mutation: Mutation,
+}
+
+type Query{
+    getAllEmployee:[Employee]
+    getEmployeeById(id:String):Employee
+
+}
+
+type Mutation {
+    createEmployee(employee:NewEmployee): Employee
+    updateEmployee(id:String, employee:NewEmployee):Employee
+}
+
+type Employee {
+    id : ID!,
+    name :String,
+    age :String,
+    gender:String,
+    dayOfBirth:String,
+    address:String,
+    mobileNumber : String,
+    position: Position,
+    department:Department
+
+}
+
+type Position{
+    positionId :ID!,
+    description:String
+}
+
+type Department{
+    departmentId :ID!,
+    description:String
+}
+
+input NewEmployee{
+    name :String,
+    age :String,
+    gender:String,
+    dayOfBirth:String,
+    address:String,
+    mobileNumber : String,
+    position: String,
+    department:String
+}
