@@ -1,9 +1,9 @@
 package com.graphql.server.processor;
 
-import com.graphql.dto.EmployeeDTO;
-import com.graphql.entity.Department;
-import com.graphql.entity.Employee;
-import com.graphql.entity.Position;
+import com.graphql.server.dto.EmployeeDTO;
+import com.graphql.server.entity.Department;
+import com.graphql.server.entity.Employee;
+import com.graphql.server.entity.Position;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsMutation;
 import com.netflix.graphql.dgs.InputArgument;
