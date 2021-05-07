@@ -1,6 +1,8 @@
 package com.graphql.server.processor;
 
+import com.graphql.server.entity.Department;
 import com.graphql.server.entity.Employee;
+import com.graphql.server.entity.Position;
 import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsQuery;
 
@@ -27,6 +29,26 @@ public class Query extends BaseProcessor {
         }
 
         return employee;
+    }
+
+    @DgsQuery
+    public List<Position> getListPosition()throws Exception{
+        List<Position> positionList=positionService.findAllPosition();
+        if (positionList.isEmpty()) {
+            throw new Exception("List is empty");
+        }
+        return positionList;
+
+    }
+
+    @DgsQuery
+    public List<Department> getListDepartment()throws Exception{
+        List<Department> departmentList=departmentService.findAllDepartment();
+        if (departmentList.isEmpty()) {
+            throw new Exception("List is empty");
+        }
+        return departmentList;
+
     }
 
 }

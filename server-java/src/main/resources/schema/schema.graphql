@@ -6,6 +6,8 @@ schema {
 type Query{
     getAllEmployee:[Employee]
     getEmployeeById(id:String):Employee
+    getListPosition:[Position]
+    getListDepartment:[Department]
 
 }
 

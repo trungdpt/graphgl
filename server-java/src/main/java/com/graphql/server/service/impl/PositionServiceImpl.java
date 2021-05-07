@@ -6,6 +6,8 @@ import com.graphql.server.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PositionServiceImpl implements PositionService {
     @Autowired
@@ -13,5 +15,10 @@ public class PositionServiceImpl implements PositionService {
     @Override
     public Position findPositionByID(Long id) {
         return positionRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<Position> findAllPosition() {
+        return positionRepository.findAll();
     }
 }
