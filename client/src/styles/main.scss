@@ -1,0 +1,62 @@
+@import './base';
+
+html, body, #root {
+    width: 100%;
+    height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+}
+
+.app-root {
+    height: 100%;
+    .app-layout {
+        height: 100%;
+        .app-header {
+            width: 100%;
+            height: $header-height;
+            position: fixed;
+            z-index: 1;
+            .app-logo {
+                display: flex;
+                align-items: center;
+                height: $header-height;
+                .app-logo-text {
+                    margin: 0 12px;
+                    color: #fff;
+                    font-size: 24px;
+                    text-transform: uppercase;
+                }
+            }
+        }
+        .app-menu {
+            width: $menu-width;
+            height: 100%;
+            margin-top: $header-height;
+            position: fixed;
+            left: 0;
+            .ant-menu {
+                height: 100%;
+                .fa {
+                    font-size: 16px;
+                }
+                .ant-menu-submenu-title {
+                    > span {
+                        margin-left: 8px;
+                    }
+                }
+            }
+        }
+        .site-layout {
+            margin-left: $menu-width;
+            .site-content {
+                padding: 0 50px;
+                margin-top: $header-height;
+                .site-content-layout {
+                    min-height: 300px;
+                    background: #fff;
+                }
+            }
+        }
+    }
+}

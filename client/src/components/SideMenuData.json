@@ -1,0 +1,18 @@
+[
+    {
+        "text": "Dashboard",
+        "icon": "fa fa-home",
+        "route": "/dashboard"
+    },
+    {
+        "text": "Manage",
+        "icon": "fa fa-cogs",
+        "children": [
+            {
+                "text": "Employee",
+                "icon": "fa fa-users",
+                "route": "/employee"
+            }
+        ]
+    }
+]
