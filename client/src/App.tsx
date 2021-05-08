@@ -1,10 +1,9 @@
 import { FC } from 'react';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route
+  BrowserRouter as Router
 } from 'react-router-dom';
-import Routers, { IRoute } from './Routers';
+import RouteConfig from './components/RouteConfig';
+import Routers from './components/RouteData';
 import AppContextProvider from './components/AppContext';
 import AppLayout from './components/AppLayout';
 import 'font-awesome/css/font-awesome.min.css';
@@ -15,16 +14,7 @@ const App: FC = () => (
     <AppContextProvider>
       <Router>
         <AppLayout>
-          <Switch>
-            {(Routers || []).map((item: IRoute) => {
-              const { id, component: Component, exact } = item || {};
-              return (
-                <Route exact={exact} path={id} key={id}>
-                  <Component />
-                </Route>
-              );
-            })}
-          </Switch>
+          <RouteConfig data={Routers} />
         </AppLayout>
       </Router>
     </AppContextProvider>

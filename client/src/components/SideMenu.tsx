@@ -1,6 +1,7 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Menu } from 'antd';
+import _ from 'lodash';
 
 interface IMenuItem {
   text: string;
@@ -14,57 +15,86 @@ interface IMenuProp {
 }
 
 const { SubMenu } = Menu;
+const cacheMenus: any = {};
 
 const SideMenu: FC<IMenuProp> = (prop: IMenuProp) => {
   const { data } = prop || {};
-  const history = useHistory();
+  const [openKeys, setOpenKeys] = useState<string[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
-  const onItemClicked = (e: any) => {
-    const { key } = e || {};
-    setSelectedKeys([key]);
-    history && history.push(key);
-  };
+  const history = useHistory();
+  const pathname = history?.location?.pathname;
 
-  const renderMenu = (data: IMenuItem[]) => {
-    return (data || []).map((item: IMenuItem, itemIndex: number) => {
-      const { text, route, icon, children } = item || {};
-      const Icon = icon && (
-        <i className={icon} />
-      );
-      if (children && children.length > 0) {
-        return (
-          <SubMenu
-            key={`sub-menu-${itemIndex}`}
-            icon={Icon}
-            title={text}
-          >
-            {renderMenu(children)}
-          </SubMenu>
+  useEffect(() => {
+    const firstRoute = _.get(_.head(data), "route");
+    if (firstRoute && pathname === "/" && pathname !== firstRoute) {
+      // redirect to first route
+      history && history.push(firstRoute);
+    } else {
+      setSelectedKeys([pathname]);
+      // default open all keys has parent
+      const defaultOpenKeys: string[] = [];
+      _.forEach(cacheMenus, (_value: string, key: string) => {
+        defaultOpenKeys.push(key);
+      });
+      setOpenKeys(defaultOpenKeys);
+    }
+  }, [pathname, data, history]);
+
+  const menuComponent = useMemo(() => {
+    const onItemClicked = (e: any) => {
+      const { key } = e || {};
+      setSelectedKeys([key]);
+      history && history.push(key);
+    };
+
+    const renderMenu = (data: IMenuItem[], parent: string | undefined) => {
+      return (data || []).map((item: IMenuItem, itemIndex: number) => {
+        const { text, route, icon, children } = item || {};
+        const Icon = icon && (
+          <i className={icon} />
         );
-      }
-      return (
-        <Menu.Item
-          key={route || `menu-${itemIndex}`}
-          icon={Icon}
-        >
-          {text}
-        </Menu.Item>
-      );
-    })
-  };
+        if (children && children.length > 0) {
+          const key = `sub-menu-${itemIndex}`;
+          return (
+            <SubMenu
+              key={key}
+              icon={Icon}
+              title={text}
+            >
+              {renderMenu(children, key)}
+            </SubMenu>
+          );
+        }
+        if (parent) {
+          cacheMenus[parent] = route;
+        }
+        return (
+          <Menu.Item
+            key={route || `menu-${itemIndex}`}
+            icon={Icon}
+          >
+            {text}
+          </Menu.Item>
+        );
+      })
+    };
 
-  return (
-    <div className="app-menu">
-      <Menu
-        mode="inline"
-        selectedKeys={selectedKeys}
-        onClick={onItemClicked}
-      >
-        {renderMenu(data)}
-      </Menu>
-    </div>
-  );
+    return (
+      <div className="app-menu">
+        <Menu
+          mode="inline"
+          defaultOpenKeys={openKeys}
+          selectedKeys={selectedKeys}
+          onClick={onItemClicked}
+        >
+          {renderMenu(data, undefined)}
+        </Menu>
+      </div>
+    );
+  }, [data, openKeys, selectedKeys, history]);
+
+  return menuComponent;
 }
 
 export default SideMenu;

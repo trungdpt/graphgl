@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
+import { IBreadcrumbItem } from './Breadcrumb';
 
 interface IContext {
+    breadcrumbs: IBreadcrumbItem[],
+    setBreadcrumbs?(data: IBreadcrumbItem[]): void
 }
 
-export const AppContext = React.createContext<IContext>({});
+export const AppContext = React.createContext<IContext>({ breadcrumbs: [] });
 
 const AppContextProvider = (prop: {
-    initialValues?: {},
     children: React.ReactNode
 }) => {
-    const { initialValues, children } = prop || {};
+    const { children } = prop || {};
+    const [breadcrumbs, setBreadcrumbs] = useState<IBreadcrumbItem[]>([]);
 
     return (
         <AppContext.Provider
             value={{
-
+                breadcrumbs,
+                setBreadcrumbs: (data) => setBreadcrumbs(data)
             }}
         >
             {children}

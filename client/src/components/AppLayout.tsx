@@ -1,7 +1,10 @@
 import React, { FC } from 'react';
-import { Layout, Breadcrumb } from 'antd';
+import { Link } from 'react-router-dom';
+import { Layout } from 'antd';
+import Breadcrumb from './Breadcrumb';
 import SideMenu from './SideMenu';
 import SideMenuJson from './SideMenuData.json';
+import Logo from '../assets/logo.png';
 
 const { Header, Content, Footer } = Layout;
 
@@ -15,18 +18,16 @@ const AppLayout: FC<IAppLayout> = (prop: IAppLayout) => {
     <Layout className="app-layout">
       <Header className="app-header">
         <div className="app-logo">
-          <img src="./favicon.ico" width={32} height={32} alt={""} />
-          <span className="app-logo-text">Technical Sharing</span>
+          <Link to="/" className="app-logo-link">
+            <img src={Logo} width={32} height={32} alt={""} />
+            <span className="app-logo-text">Technical Sharing</span>
+          </Link>
         </div>
       </Header>
       <SideMenu data={SideMenuJson} />
       <Layout className="site-layout">
         <Content className="site-content">
-          <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
+          <Breadcrumb />
           <div className="site-content-layout">
             {children}
           </div>
