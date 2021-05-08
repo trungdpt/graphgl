@@ -26,26 +26,41 @@ const SideMenu: FC<IMenuProp> = (prop: IMenuProp) => {
   const pathname = history?.location?.pathname;
 
   useEffect(() => {
+    // rerender openkeys & selectedkeys
+    setSelectedKeys([pathname]);
+    // default open all keys has parent
+    const defaultOpenKeys: string[] = [];
+    _.forEach(cacheMenus, (_value: string, key: string) => {
+      defaultOpenKeys.push(key);
+    });
+    setOpenKeys(defaultOpenKeys);
+
     const firstRoute = _.get(_.head(data), "route");
     if (firstRoute && pathname === "/" && pathname !== firstRoute) {
       // redirect to first route
       history && history.push(firstRoute);
-    } else {
-      setSelectedKeys([pathname]);
-      // default open all keys has parent
-      const defaultOpenKeys: string[] = [];
-      _.forEach(cacheMenus, (_value: string, key: string) => {
-        defaultOpenKeys.push(key);
-      });
-      setOpenKeys(defaultOpenKeys);
     }
   }, [pathname, data, history]);
 
   const menuComponent = useMemo(() => {
+
     const onItemClicked = (e: any) => {
       const { key } = e || {};
       setSelectedKeys([key]);
       history && history.push(key);
+    };
+
+    const onOpenChange = (keys: React.Key[]) => {
+      const rootSubmenuKeys: string[] = [];
+      _.forEach(cacheMenus, (_value: string, key: string) => {
+        rootSubmenuKeys.push(key);
+      });
+      const latestOpenKey = keys.find(key => openKeys.indexOf(key.toString()) === -1);
+      if (!latestOpenKey || (latestOpenKey && rootSubmenuKeys.indexOf(latestOpenKey.toString()) === -1)) {
+        setOpenKeys(keys.map(key => key.toString()));
+      } else {
+        setOpenKeys(latestOpenKey ? [latestOpenKey.toString()] : []);
+      }
     };
 
     const renderMenu = (data: IMenuItem[], parent: string | undefined) => {
@@ -84,7 +99,8 @@ const SideMenu: FC<IMenuProp> = (prop: IMenuProp) => {
       <div className="app-menu">
         <Menu
           mode="inline"
-          defaultOpenKeys={openKeys}
+          openKeys={openKeys}
+          onOpenChange={onOpenChange}
           selectedKeys={selectedKeys}
           onClick={onItemClicked}
         >

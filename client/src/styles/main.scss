@@ -24,10 +24,14 @@ html, body, #root {
                 .app-logo-link {
                     display: flex;
                     align-items: center;
+                    height: 100%;
                     .app-logo-text {
+                        height: inherit;
+                        display: flex;
+                        align-items: center;
                         margin: 0 12px;
                         color: #fff;
-                        font-size: 24px;
+                        font-size: 20px;
                         text-transform: uppercase;
                     }
                 }
@@ -54,7 +58,7 @@ html, body, #root {
         .site-layout {
             margin-left: $menu-width;
             .site-content {
-                padding: 0 50px;
+                padding: 0 20px;
                 margin-top: $header-height;
                 .app-breadcrumb {
                     height: 44px;
@@ -62,8 +66,13 @@ html, body, #root {
                 }
                 .site-content-layout {
                     min-height: 300px;
+                    padding: 15px;
                     background: #fff;
+                    border-radius: 2px;
                 }
+            }
+            .app-footer {
+                padding: 10px 20px;
             }
         }
     }
