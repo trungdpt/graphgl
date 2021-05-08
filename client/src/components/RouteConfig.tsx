@@ -4,9 +4,9 @@ import { IBreadcrumbItem } from './Breadcrumb';
 
 export interface IRoute {
     id: string;
-    component: FC<any>;
+    component: React.ElementType;
     exact: boolean;
-    breadcrumbs?: IBreadcrumbItem[]
+    breadcrumbs?: IBreadcrumbItem[];
 }
 
 interface IRouteConfigProp {
@@ -23,17 +23,11 @@ const RouteConfig: FC<IRouteConfigProp> = (prop: IRouteConfigProp) => {
                 key={id}
                 path={id}
                 exact={exact}
-                render={(routeProp) => (
-                    <Component {...routeProp} breadcrumbs={breadcrumbs} />
-                )}
+                render={(routeProp) => <Component {...routeProp} breadcrumbs={breadcrumbs} />}
             />
-        )
+        );
     });
-    return (
-        <Switch>
-            {component}
-        </Switch>
-    );
+    return <Switch>{component}</Switch>;
 };
 
 export default RouteConfig;

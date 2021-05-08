@@ -3,21 +3,19 @@ import { AppContext } from '../../components/AppContext';
 import { IBreadcrumbItem } from '../../components/Breadcrumb';
 
 interface IEmployeeGridProp {
-  breadcrumbs: IBreadcrumbItem[];
+    breadcrumbs: IBreadcrumbItem[];
 }
 
 const EmployeeGrid: FC<IEmployeeGridProp> = (prop: IEmployeeGridProp) => {
-  const { breadcrumbs } = prop || {};
-  const appContext = useContext(AppContext);
-  const { setBreadcrumbs } = appContext || {};
+    const { breadcrumbs } = prop || {};
+    const appContext = useContext(AppContext);
+    const { setBreadcrumbs } = appContext || {};
 
-  useEffect(() => {
-    setBreadcrumbs && setBreadcrumbs(breadcrumbs || []);
-  }, [breadcrumbs, setBreadcrumbs]);
+    useEffect(() => {
+        setBreadcrumbs && setBreadcrumbs(breadcrumbs || []);
+    }, [breadcrumbs, setBreadcrumbs]);
 
-  return (
-    <div>Employee</div>
-  );
-}
+    return <div>Employee</div>;
+};
 
 export default EmployeeGrid;
