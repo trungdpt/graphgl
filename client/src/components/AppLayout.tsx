@@ -11,7 +11,6 @@ interface IAppLayout {
 
 const AppLayout: FC<IAppLayout> = (prop: IAppLayout) => {
   const { children } = prop || {};
-  console.log(children);
   return (
     <Layout className="app-layout">
       <Header className="app-header">

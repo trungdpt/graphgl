@@ -1,6 +1,6 @@
-import { FC, useState, useContext } from 'react';
+import { FC, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Menu } from 'antd';
-import { AppContext } from './AppContext';
 
 interface IMenuItem {
   text: string;
@@ -17,14 +17,13 @@ const { SubMenu } = Menu;
 
 const SideMenu: FC<IMenuProp> = (prop: IMenuProp) => {
   const { data } = prop || {};
+  const history = useHistory();
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
-  const appContext = useContext(AppContext);
-  const { history } = appContext || {};
 
   const onItemClicked = (e: any) => {
     const { key } = e || {};
     setSelectedKeys([key]);
-    history?.push(key);
+    history && history.push(key);
   };
 
   const renderMenu = (data: IMenuItem[]) => {

@@ -1,23 +1,20 @@
 import { FC } from 'react';
-import { Router } from 'react-router';
 import {
+  BrowserRouter as Router,
   Switch,
   Route
 } from 'react-router-dom';
-import { createHashHistory } from 'history';
 import Routers, { IRoute } from './Routers';
 import AppContextProvider from './components/AppContext';
 import AppLayout from './components/AppLayout';
 import 'font-awesome/css/font-awesome.min.css';
 import './App.scss';
 
-const history = createHashHistory();
-
 const App: FC = () => (
   <div className="app-root">
-    <AppContextProvider initialValues={{ history }}>
-      <AppLayout>
-        <Router history={history}>
+    <AppContextProvider>
+      <Router>
+        <AppLayout>
           <Switch>
             {(Routers || []).map((item: IRoute) => {
               const { id, component: Component, exact } = item || {};
@@ -28,8 +25,8 @@ const App: FC = () => (
               );
             })}
           </Switch>
-        </Router>
-      </AppLayout>
+        </AppLayout>
+      </Router>
     </AppContextProvider>
   </div>
 );
