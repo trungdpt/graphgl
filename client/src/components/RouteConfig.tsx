@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { IBreadcrumbItem } from './Breadcrumb';
+import NotFound from './NotFound';
 
 export interface IRoute {
     id: string;
@@ -27,7 +28,12 @@ const RouteConfig: FC<IRouteConfigProp> = (prop: IRouteConfigProp) => {
             />
         );
     });
-    return <Switch>{component}</Switch>;
+    return (
+        <Switch>
+            {component}
+            <Route component={NotFound} />
+        </Switch>
+    );
 };
 
 export default RouteConfig;

@@ -15,6 +15,7 @@ html, body, #root {
         .app-header {
             width: 100%;
             height: $header-height;
+            padding: 0 16px;
             position: fixed;
             z-index: 1;
             .app-logo {
@@ -65,7 +66,6 @@ html, body, #root {
                     padding: 12px 0;
                 }
                 .site-content-layout {
-                    min-height: 300px;
                     padding: 15px;
                     background: #fff;
                     border-radius: 2px;
@@ -76,4 +76,8 @@ html, body, #root {
             }
         }
     }
+}
+
+.app-not-found {
+    color: #000;
 }
