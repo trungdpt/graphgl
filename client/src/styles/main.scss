@@ -81,3 +81,13 @@ html, body, #root {
 .app-not-found {
     color: #000;
 }
+
+.base-grid {
+    .tree-cell-expandable {
+        display: flex;
+        .tree-cell-expander {
+            width: 30px;
+            cursor: pointer;
+        }
+    }
+}

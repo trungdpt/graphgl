@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Layout } from 'antd';
 import Breadcrumb from './Breadcrumb';
 import SideMenu from './SideMenu';
-import SideMenuJson from './SideMenuData.json';
+import SideMenuJson from '../data/SideMenuData.json';
 import Logo from '../assets/logo.png';
 
 const { Header, Content, Footer } = Layout;

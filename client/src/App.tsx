@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import RouteConfig from './components/RouteConfig';
-import Routers from './components/RouteData';
+import Routers from './data/RouteData';
 import AppContextProvider from './components/AppContext';
 import AppLayout from './components/AppLayout';
 import 'font-awesome/css/font-awesome.min.css';
