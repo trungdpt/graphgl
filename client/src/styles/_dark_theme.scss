@@ -1,0 +1,42 @@
+$dark-header-bg: #141414;
+$dark-header-color: #fff;
+$dark-menu-bg: #141414;
+
+body.dark-theme {
+    .app-root {
+        .app-layout {
+            .app-header {
+                background: $dark-header-bg;
+                box-shadow: #000000a6 0px 2px 8px 0px;
+                -webkit-box-shadow: #000000a6 0px 2px 8px 0px;
+                -moz-box-shadow: #000000a6 0px 2px 8px 0px;
+                .app-logo {
+                    .app-logo-link {
+                        .app-logo-text {
+                            color: $dark-header-color;
+                        }
+                    }
+                }
+            }
+            .app-menu {
+                .ant-menu {
+                    &.ant-menu-inline, &.ant-menu-vertical, &.ant-menu-vertical-left {
+                        border-right: 1px solid rgb(48, 48, 48);
+                    }
+                    background: $dark-menu-bg;
+
+                    &.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+                        background-color: rgb(17, 27, 38);
+                    }
+
+                    .ant-menu-item:not(.ant-menu-item-selected) > span,
+                    .ant-menu-item:not(.ant-menu-item-selected) > i,
+                    .ant-menu-submenu:not(.ant-menu-submenu-selected) > .ant-menu-submenu-title > span,
+                    .ant-menu-submenu:not(.ant-menu-submenu-selected) > .ant-menu-submenu-title > i {
+                        color: rgba(255, 255, 255, 0.85);
+                    }
+                }
+            }
+        }
+    }
+}

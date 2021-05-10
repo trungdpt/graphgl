@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Layout } from 'antd';
 import Breadcrumb from './Breadcrumb';
 import SideMenu from './SideMenu';
+import Themer from './Themer';
 import SideMenuJson from '../data/SideMenuData.json';
 import Logo from '../assets/logo.png';
 
@@ -27,7 +28,10 @@ const AppLayout: FC<IAppLayout> = (prop: IAppLayout) => {
             <SideMenu data={SideMenuJson} />
             <Layout className="site-layout">
                 <Content className="site-content">
-                    <Breadcrumb />
+                    <div className="app-addresses">
+                        <Breadcrumb />
+                        <Themer />
+                    </div>
                     <div className="site-content-layout">{children}</div>
                 </Content>
                 <Footer className="app-footer">Copyright 2021 - DG1-Ext</Footer>
