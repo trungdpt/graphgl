@@ -31,16 +31,21 @@ const GET_ALL_EMP = gql`
 
 
 export const Body = () => {
-    const { loading, error, data } = useQuery(GET_ALL_EMP);
+    const { loading, error, data, refetch } = useQuery(GET_ALL_EMP);
     const [selectedPerson, setSelectedPerson] = useState(null);
     const [isCreateModalShown, setIsCreateModalShown] = useState(false);
     const [isEditModalShown, setIsEditModalShown] = useState(false);
     const [isDeleteModalShown, setIsDeleteModalShown] = useState(false);
-
+    const [employees, setEmployees] = useState([])
     useEffect(() => {
         console.log(data)
     }, [])
 
+    useEffect(() => {
+        if(!loading && data) {
+            setEmployees(data.getAllEmployee)
+        }
+    }, [loading])
 
     const handleCreateModalClose = () => {
         setIsCreateModalShown(false);
@@ -69,10 +74,16 @@ export const Body = () => {
         setSelectedPerson(null);
         setIsDeleteModalShown(false);
     }
+
+    const refresh = () => {
+        refetch();
+        handleCreateModalClose();
+    }
+    
     if (loading) {
         return <p>Loading...</p>;
     } else {
-        if (data) {
+        if (employees && employees.length) {
             return <Container className="mt-4">
                 <Button variant="success" onClick={showCreateModal}>Create</Button>
                 <Table striped bordered hover className="m-2">
@@ -86,7 +97,7 @@ export const Body = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.getAllEmployee && data.getAllEmployee.map(i =>
+                        {employees.map(i =>
                             <tr className="text-center">
                                 <td>{i.name}</td>
                                 <td>{i.gender}</td>
@@ -97,7 +108,7 @@ export const Body = () => {
                                         <Col xs={{ span: 6, offset: 3 }}>
                                             <Row>
                                                 <Col>
-                                                    <Button className="me-1 w-100" onClick={() => { showEditModal(i) }}> Edit </Button>
+                                                    <Button className="me-1 w-100" onClick={() => { showEditModal(i) }}>Edit</Button>
                                                 </Col>
                                                 <Col>
                                                     <Button variant="danger w-100" onClick={() => { showDeleteModal(i) }} block>Delete</Button>
@@ -110,7 +121,7 @@ export const Body = () => {
                         }
                     </tbody>
                 </Table>
-                <CreateModal show={isCreateModalShown} handleClose={handleCreateModalClose} />
+                <CreateModal show={isCreateModalShown} handleClose={handleCreateModalClose} refresh={refresh}/>
                 <EditModal show={isEditModalShown} handleClose={handleEditModalClose} selectedPerson={selectedPerson} />
                 <DeleteModal show={isDeleteModalShown} handleClose={hideDeleteModal} selectedPerson={selectedPerson} />
             </Container>

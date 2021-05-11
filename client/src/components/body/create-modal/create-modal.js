@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Button, Modal, Form, Col } from 'react-bootstrap';
-import { gql, useLazyQuery } from '@apollo/client';
+import { gql, useLazyQuery, useMutation } from '@apollo/client';
 
 const GET_LIST_POSITION = gql`
     query {
@@ -20,9 +20,18 @@ const GET_LIST_DEPARTMENT = gql`
     }
 `;
 
-export const CreateModal = ({ show, handleClose }) => {
+const CREATE_EMPLOYEE = gql `
+    mutation addEmployee($employee: NewEmployee) {
+        createEmployee(employee: $employee) {
+            
+        }
+    }
+`
+
+export const CreateModal = ({ show, handleClose, refresh }) => {
     const [getPositions, { called: calledGetListPosition, loading: loadingGetListPosition, data: dataGetListPosition }] = useLazyQuery(GET_LIST_POSITION);
     const [getDepartments, { called: calledGetListDepartment, loading: loadingGetListDepartment, data: dataGetListDepartment }] = useLazyQuery(GET_LIST_DEPARTMENT);
+    const [createEmployee, { data: dataCreateEmployee, loading : loadingCreateEmployee }] = useMutation(CREATE_EMPLOYEE);
     const [createPerson, setCreatePerson] = useState(null);
     const [positions, setPositions] = useState();
 
@@ -33,6 +42,9 @@ export const CreateModal = ({ show, handleClose }) => {
 
     const submitForm = () => {
         console.log(createPerson);
+        createEmployee({ variables: {
+            employee: createPerson
+        }});
     }
 
     useEffect(() => {
@@ -53,6 +65,12 @@ export const CreateModal = ({ show, handleClose }) => {
             setCreatePerson(null);
         }
     }, [show])
+
+    useEffect(() => {
+        if(!loadingCreateEmployee && dataCreateEmployee) {
+            refresh();
+        }
+    }, [loadingCreateEmployee])
 
     return (
         <Modal show={show} onHide={handleClose} centered>
@@ -89,7 +107,7 @@ export const CreateModal = ({ show, handleClose }) => {
                         </Form.Control>
                     </Col>
                 </Form.Group>
-                <Form.Group as={Row} controlId="DOB"
+                <Form.Group as={Row} controlId="dayOfBirth"
                     className="my-3">
                     <Form.Label column sm="3">
                         Day Of Birth
