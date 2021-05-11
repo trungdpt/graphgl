@@ -57,14 +57,14 @@ const EmployeeGrid: FC<IEmployeeGridProp> = (prop: IEmployeeGridProp) => {
     useEffect(() => {
         setBreadcrumbs && setBreadcrumbs(breadcrumbs || []);
         const rows: IEmployeeRow[] = [];
-        for (let i = 0; i < 5000; i++) {
+        for (let i = 0; i < 10000; i++) {
             const newRow: IEmployeeRow = {
                 id: `other-${i}`,
                 name: `employee-${i}`,
                 email: 'email@example.com.vn',
                 department: `department-${i}`,
                 dob: randomDate(new Date('1990-01-01'), new Date('2000-12-31')).toString(),
-                position: 'position',
+                position: `position ${i}`,
             };
             rows.push(_.assign(newRow, { key: newRow.id }));
         }

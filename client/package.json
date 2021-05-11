@@ -7,7 +7,9 @@
 		"@testing-library/react": "^11.2.6",
 		"@testing-library/user-event": "^12.8.3",
 		"@types/react-window": "^1.8.3",
+		"@unicef/react-org-chart": "^0.3.4",
 		"antd": "^4.15.3",
+		"d3": "^6.7.0",
 		"font-awesome": "^4.7.0",
 		"node-sass": "^5.0.0",
 		"react": "^17.0.2",
@@ -20,7 +22,7 @@
 	},
 	"scripts": {
 		"analyze": "source-map-explorer 'build/static/js/*.js'",
-		"lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
+		"lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix --no-error-on-unmatched-pattern",
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
