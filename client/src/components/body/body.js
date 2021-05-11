@@ -31,7 +31,7 @@ const GET_ALL_EMP = gql`
 
 
 export const Body = () => {
-    const { loading, error, data, refetch } = useQuery(GET_ALL_EMP);
+    const { loading, error, data, refetch, networkStatus } = useQuery(GET_ALL_EMP, { notifyOnNetworkStatusChange: true, });
     const [selectedPerson, setSelectedPerson] = useState(null);
     const [isCreateModalShown, setIsCreateModalShown] = useState(false);
     const [isEditModalShown, setIsEditModalShown] = useState(false);
@@ -45,7 +45,12 @@ export const Body = () => {
         if(!loading && data) {
             setEmployees(data.getAllEmployee)
         }
+        console.log('loadinggggg', loading);
     }, [loading])
+
+    useEffect(() => {
+        console.log('networkStatus', networkStatus);
+    }, [networkStatus])
 
     const handleCreateModalClose = () => {
         setIsCreateModalShown(false);
@@ -77,7 +82,12 @@ export const Body = () => {
 
     const refresh = () => {
         refetch();
-        handleCreateModalClose();
+        if(isCreateModalShown) {
+            handleCreateModalClose();
+        }
+        if(isDeleteModalShown) {
+            hideDeleteModal();
+        }
     }
     
     if (loading) {
@@ -123,7 +133,7 @@ export const Body = () => {
                 </Table>
                 <CreateModal show={isCreateModalShown} handleClose={handleCreateModalClose} refresh={refresh}/>
                 <EditModal show={isEditModalShown} handleClose={handleEditModalClose} selectedPerson={selectedPerson} />
-                <DeleteModal show={isDeleteModalShown} handleClose={hideDeleteModal} selectedPerson={selectedPerson} />
+                <DeleteModal show={isDeleteModalShown} refresh={refresh} handleClose={hideDeleteModal} selectedPerson={selectedPerson} />
             </Container>
         }
         return <div>Data invalid</div>

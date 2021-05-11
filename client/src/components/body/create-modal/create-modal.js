@@ -23,15 +23,17 @@ const GET_LIST_DEPARTMENT = gql`
 const CREATE_EMPLOYEE = gql `
     mutation addEmployee($employee: NewEmployee) {
         createEmployee(employee: $employee) {
-            
+            resultCode
         }
     }
 `
 
+
+
 export const CreateModal = ({ show, handleClose, refresh }) => {
     const [getPositions, { called: calledGetListPosition, loading: loadingGetListPosition, data: dataGetListPosition }] = useLazyQuery(GET_LIST_POSITION);
     const [getDepartments, { called: calledGetListDepartment, loading: loadingGetListDepartment, data: dataGetListDepartment }] = useLazyQuery(GET_LIST_DEPARTMENT);
-    const [createEmployee, { data: dataCreateEmployee, loading : loadingCreateEmployee }] = useMutation(CREATE_EMPLOYEE);
+    const [createEmployee, { data: dataCreateEmployee, loading: loadingCreateEmployee }] = useMutation(CREATE_EMPLOYEE);
     const [createPerson, setCreatePerson] = useState(null);
     const [positions, setPositions] = useState();
 
@@ -42,8 +44,9 @@ export const CreateModal = ({ show, handleClose, refresh }) => {
 
     const submitForm = () => {
         console.log(createPerson);
-        createEmployee({ variables: {
-            employee: createPerson
+        createEmployee({ 
+            variables: {
+                employee: createPerson
         }});
     }
 
@@ -68,6 +71,7 @@ export const CreateModal = ({ show, handleClose, refresh }) => {
 
     useEffect(() => {
         if(!loadingCreateEmployee && dataCreateEmployee) {
+            console.log(dataCreateEmployee);
             refresh();
         }
     }, [loadingCreateEmployee])
@@ -155,7 +159,7 @@ export const CreateModal = ({ show, handleClose, refresh }) => {
                 </Form.Group>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="primary" onClick={submitForm}>
+                <Button variant="success" onClick={submitForm}>
                     Create
                      </Button>
                 <Button variant="secondary" onClick={handleClose}>
