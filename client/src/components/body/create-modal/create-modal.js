@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Button, Modal, Form, Col } from 'react-bootstrap';
+import { Row, Button, Modal, Form, Col, Spinner } from 'react-bootstrap';
 import { gql, useLazyQuery, useMutation } from '@apollo/client';
 
 const GET_LIST_POSITION = gql`
@@ -36,6 +36,7 @@ export const CreateModal = ({ show, handleClose, refresh }) => {
     const [createEmployee, { data: dataCreateEmployee, loading: loadingCreateEmployee }] = useMutation(CREATE_EMPLOYEE);
     const [createPerson, setCreatePerson] = useState(null);
     const [positions, setPositions] = useState();
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleFormChange = (e) => {
         createPerson[e.target.id] = e.target.value;
@@ -43,7 +44,7 @@ export const CreateModal = ({ show, handleClose, refresh }) => {
     }
 
     const submitForm = () => {
-        console.log(createPerson);
+        setIsSubmitting(true);
         createEmployee({ 
             variables: {
                 employee: createPerson
@@ -71,8 +72,8 @@ export const CreateModal = ({ show, handleClose, refresh }) => {
 
     useEffect(() => {
         if(!loadingCreateEmployee && dataCreateEmployee) {
-            console.log(dataCreateEmployee);
             refresh();
+            setIsSubmitting(false)
         }
     }, [loadingCreateEmployee])
 
@@ -117,7 +118,7 @@ export const CreateModal = ({ show, handleClose, refresh }) => {
                         Day Of Birth
                         </Form.Label>
                     <Col sm="9">
-                        <Form.Control placeholder="DOB"
+                        <Form.Control placeholder="Day of Birth"
                             onChange={handleFormChange} />
                     </Col>
                 </Form.Group>
@@ -134,10 +135,10 @@ export const CreateModal = ({ show, handleClose, refresh }) => {
                 <Form.Group as={Row} controlId="mobileNumber"
                     className="my-3">
                     <Form.Label column sm="3">
-                        Mobile Number
+                        Phone
                         </Form.Label>
                     <Col sm="9">
-                        <Form.Control placeholder="Mobile Number"
+                        <Form.Control placeholder="Phone Number"
                             onChange={handleFormChange} />
                     </Col>
                 </Form.Group>
@@ -160,11 +161,11 @@ export const CreateModal = ({ show, handleClose, refresh }) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="success" onClick={submitForm}>
-                    Create
-                     </Button>
+                    {isSubmitting ? <Spinner animation="border" variant="light" size="sm"/> : 'Create'}
+                </Button>
                 <Button variant="secondary" onClick={handleClose}>
                     Close
-                    </Button>
+                </Button>
             </Modal.Footer>
         </Modal>
     );

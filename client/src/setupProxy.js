@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/graphql',
     createProxyMiddleware({
-      target: 'https://41a46db2c6eb.ap.ngrok.io',
+      target: 'https://1fa1923f2a94.ap.ngrok.io',
       changeOrigin: true
     })
   );

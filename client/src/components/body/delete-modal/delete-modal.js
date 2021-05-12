@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Button, Modal, Form, Col } from 'react-bootstrap';
+import { Row, Button, Modal, Form, Col, Spinner } from 'react-bootstrap';
 import { gql, useMutation } from '@apollo/client';
 
 const DELETE_EMPLOYEE = gql `
@@ -13,6 +13,7 @@ const DELETE_EMPLOYEE = gql `
 export const DeleteModal = ({ show, refresh, selectedPerson, handleClose }) => {
     const [deleteEmployee, { data: dataDeleteEmployee, loading: loadingDeleteEmployee }] = useMutation(DELETE_EMPLOYEE);
     const [deletePerson, setDeletePerson] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         if(show) {
@@ -23,7 +24,7 @@ export const DeleteModal = ({ show, refresh, selectedPerson, handleClose }) => {
     }, [show])
 
     const submitDelete = () => {
-        console.log(deletePerson.id);
+        setIsSubmitting(true);
         deleteEmployee({ 
             variables: {
                 id: deletePerson.id
@@ -33,6 +34,7 @@ export const DeleteModal = ({ show, refresh, selectedPerson, handleClose }) => {
 
     useEffect(() => {
         if(!loadingDeleteEmployee && dataDeleteEmployee) {
+            setIsSubmitting(false);
             refresh();
         }
     }, [loadingDeleteEmployee])
@@ -47,7 +49,7 @@ export const DeleteModal = ({ show, refresh, selectedPerson, handleClose }) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="danger" onClick={submitDelete}>
-                    Delete
+                    {isSubmitting ? <Spinner animation="border" variant="light" size="sm"/> : 'Delete' }
                      </Button>
                 <Button variant="secondary" onClick={handleClose}>
                     Close
