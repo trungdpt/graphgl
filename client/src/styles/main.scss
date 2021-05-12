@@ -146,6 +146,16 @@ body,
     }
 }
 
+.virtual-table {
+    .virtual-grid {
+        .virtual-table-cell {
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+    }
+}
+
 .field-set {
     border: 1px solid $primary-color;
     -webkit-border-radius: 5px;
@@ -160,3 +170,4 @@ body,
 }
 
 @import "./dashboard";
+@import "./practice";

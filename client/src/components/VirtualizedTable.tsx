@@ -66,6 +66,8 @@ const VirtualizedTable = (props: Parameters<typeof Table>[0]): JSX.Element => {
                     rowIndex: number;
                     style: React.CSSProperties;
                 }) => {
+                    const value = (rawData[rowIndex] as any)[(mergedColumns as any)[columnIndex].dataIndex];
+                    const render = (mergedColumns as any)[columnIndex].render;
                     return (
                         <div
                             className={classNames('virtual-table-cell', {
@@ -73,7 +75,7 @@ const VirtualizedTable = (props: Parameters<typeof Table>[0]): JSX.Element => {
                             })}
                             style={style}
                         >
-                            {(rawData[rowIndex] as any)[(mergedColumns as any)[columnIndex].dataIndex]}
+                            {render ? render(value, rawData[rowIndex] as any, rowIndex) : value}
                         </div>
                     );
                 }}

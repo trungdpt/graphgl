@@ -4,6 +4,7 @@ import { AppContext } from '../../components/AppContext';
 import { IBreadcrumbItem } from '../../components/Breadcrumb';
 import VirtualizedTable from '../../components/VirtualizedTable';
 import { randomDate } from '../../utils/Util';
+import avatar from '../../assets/avatar.png';
 
 interface IEmployeeGridProp {
     breadcrumbs: IBreadcrumbItem[];
@@ -11,6 +12,7 @@ interface IEmployeeGridProp {
 
 interface IEmployeeRow {
     id: number | string;
+    avatar: string;
     name: string;
     dob: string;
     email: string;
@@ -31,6 +33,14 @@ const EmployeeGrid: FC<IEmployeeGridProp> = (prop: IEmployeeGridProp) => {
             dataIndex: 'name',
             title: 'Tên',
             width: 200,
+            render: function renderName(value: any, row: any) {
+                return (
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <img src={row.avatar} alt="" width={28} height={28} />
+                        <div style={{ margin: '0 0 0 5px' }}>{value}</div>
+                    </div>
+                );
+            },
         },
         {
             key: 'email',
@@ -41,10 +51,8 @@ const EmployeeGrid: FC<IEmployeeGridProp> = (prop: IEmployeeGridProp) => {
             key: 'dob',
             dataIndex: 'dob',
             title: 'Ngày sinh',
-
-            // eslint-disable-next-line react/display-name
-            render: (row: IEmployeeRow) => {
-                return <>{row?.dob && dateFormatter.format(new Date(row?.dob))}</>;
+            render: function renderBirthday(value: any) {
+                return <>{value && dateFormatter.format(new Date(value))}</>;
             },
         },
         {
@@ -60,6 +68,7 @@ const EmployeeGrid: FC<IEmployeeGridProp> = (prop: IEmployeeGridProp) => {
         for (let i = 0; i < 10000; i++) {
             const newRow: IEmployeeRow = {
                 id: `other-${i}`,
+                avatar: avatar,
                 name: `employee-${i}`,
                 email: 'email@example.com.vn',
                 department: `department-${i}`,

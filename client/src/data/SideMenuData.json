@@ -12,6 +12,11 @@
                 "text": "Employee",
                 "icon": "fa fa-users",
                 "route": "/employee"
+            },
+            {
+                "text": "Practice",
+                "icon": "fa fa-file",
+                "route": "/practice"
             }
         ]
     }
