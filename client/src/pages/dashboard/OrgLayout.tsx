@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import ReactFlow, {
     ReactFlowProvider,
     addEdge,
@@ -11,6 +11,7 @@ import ReactFlow, {
 import dagre from 'dagre';
 
 import initialElements from './initial-elements';
+import OrgNode from './OrgNode';
 
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
@@ -21,6 +22,9 @@ dagreGraph.setDefaultEdgeLabel(() => ({}));
 
 const nodeWidth = 200;
 const nodeHeight = 40;
+const nodeTypes = {
+    orgNode: OrgNode,
+};
 
 const getLayoutedElements = (elements: any, direction = 'TB') => {
     const isHorizontal = direction === 'LR';
@@ -58,25 +62,36 @@ const getLayoutedElements = (elements: any, direction = 'TB') => {
 const layoutedElements = getLayoutedElements(initialElements);
 
 const LayoutFlow = () => {
+    const [reactflowInstance, setReactflowInstance] = useState<any>();
     const [elements, setElements] = useState(layoutedElements);
     const onConnect = (params: any) =>
         setElements((els: any) => addEdge({ ...params, type: 'smoothstep', animated: true }, els));
     const onElementsRemove = (elementsToRemove: any) =>
         setElements((els: any) => removeElements(elementsToRemove, els));
 
-    const onLayout = useCallback(
-        (direction) => {
-            const layoutedElements = getLayoutedElements(elements, direction);
-            setElements(layoutedElements);
+    useEffect(() => {
+        if (reactflowInstance && elements.length > 0) {
+            reactflowInstance.fitView();
+            reactflowInstance.zoomTo(1);
+        }
+    }, [reactflowInstance, elements.length]);
+
+    const onLoad = useCallback(
+        (rfi: any) => {
+            if (!reactflowInstance) {
+                setReactflowInstance(rfi);
+            }
         },
-        [elements],
+        [reactflowInstance],
     );
 
     return (
-        <div className="layoutflow" style={{ height: '100%' }}>
+        <div className="layoutflow">
             <ReactFlowProvider>
                 <ReactFlow
                     elements={elements}
+                    nodeTypes={nodeTypes}
+                    onLoad={onLoad}
                     onConnect={onConnect}
                     onElementsRemove={onElementsRemove}
                     connectionLineType={'smoothstep' as ConnectionLineType}

@@ -49,31 +49,37 @@ export default [
     },
     {
         id: '3d',
+        type: 'orgNode',
         data: { label: 'Tài Lê' },
         position,
     },
     {
         id: '3e',
+        type: 'orgNode',
         data: { label: 'Hiên Trần' },
         position,
     },
     {
         id: '3f',
+        type: 'orgNode',
         data: { label: 'Nhân Lê' },
         position,
     },
     {
         id: '3g',
+        type: 'orgNode',
         data: { label: 'Thiên Nguyễn' },
         position,
     },
     {
         id: '3h',
+        type: 'orgNode',
         data: { label: 'Liễu Võ' },
         position,
     },
     {
         id: '3i',
+        type: 'orgNode',
         data: { label: 'An Trịnh' },
         position,
     },

@@ -17,8 +17,11 @@ const Dashboard: FC<IDashboardProp> = (prop: IDashboardProp) => {
     }, [breadcrumbs, setBreadcrumbs]);
 
     return (
-        <div className="dashboard" style={{ height: '100%' }}>
-            <OrgLayout />
+        <div className="dashboard">
+            <fieldset className="field-set">
+                <legend>Sơ đồ tổ chức</legend>
+                <OrgLayout />
+            </fieldset>
         </div>
     );
 };

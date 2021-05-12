@@ -1,0 +1,29 @@
+.dashboard {
+    height: 100%;
+    .field-set {
+        height: inherit;
+        .layoutflow {
+            height: inherit;
+            .org-node {
+                display: flex;
+                flex-direction: column;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                padding: 10px 16px;
+                &-content {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    .org-node-avatar {
+                        width: 32px;
+                        height: 32px;
+                    }
+                    .org-node-label {
+                        margin: 0 10px;
+                        font-size: 14px;
+                    }
+                }
+            }
+        }
+    }
+}
