@@ -23,7 +23,8 @@
 	},
 	"scripts": {
 		"analyze": "source-map-explorer 'build/static/js/*.js'",
-		"lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix --no-error-on-unmatched-pattern",
+		"lint-win": "eslint \"./src/**/*.{js,ts,tsx}\" --quiet --fix",
+		"lint-mac": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
