@@ -1,3 +1,4 @@
+#ngrok http --config "ngrok.yml" --host-header=rewrite 9090
 schema {
     query: Query,
     mutation: Mutation,
@@ -5,15 +6,17 @@ schema {
 
 type Query{
     getAllEmployee:[Employee]
-    getEmployeeById(id:String):Employee
+    getEmployeeById(id:String):BaseResponse
     getListPosition:[Position]
     getListDepartment:[Department]
+    getAllEmployeePagination(page:Int,size:Int):GetEmployeeResponse
 
 }
 
 type Mutation {
-    createEmployee(employee:NewEmployee): Employee
-    updateEmployee(id:String, employee:NewEmployee):Employee
+    createEmployee(employee:NewEmployee): BaseResponse
+    updateEmployee(id:String, employee:NewEmployee):BaseResponse
+    deleteEmployeeById(id:String):BaseResponse
 }
 
 type Employee {
@@ -48,4 +51,19 @@ input NewEmployee{
     mobileNumber : String,
     position: String,
     department:String
+}
+
+type BaseResponse{
+    resultCode:String,
+    description:String,
+    data: Employee
+}
+
+type GetEmployeeResponse {
+    resultCode:String,
+    description:String,
+    totalRecord:String
+    totalPage:Int
+    pageIndex:Int
+    data:[Employee]
 }
