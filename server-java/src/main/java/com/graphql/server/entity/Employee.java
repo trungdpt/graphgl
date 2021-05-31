@@ -1,6 +1,7 @@
 package com.graphql.server.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Employee {
@@ -21,6 +22,13 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "departmentId")
     private Department department;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_employee_id", referencedColumnName = "id")
+    private  Employee parent;
+
+    @OneToMany(mappedBy = "parent",fetch = FetchType.LAZY)
+    private List<Employee> children ;
 
     public Employee() {
     }
